@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSongs() {
-        MainActivityViewModel.getSongList().add(new SongFile("五四特别版——错位时空","排骨"));
+        MainActivityViewModel.addMusicFile(new SongFile("五四特别版——错位时空","排骨"));
     }
 
     @Override
