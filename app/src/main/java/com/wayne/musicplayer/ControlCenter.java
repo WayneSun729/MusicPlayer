@@ -13,31 +13,38 @@ import android.widget.Toast;
  */
 public class ControlCenter extends LinearLayout implements View.OnClickListener {
     MyMediaPlayer myMediaPlayer;
+    Button btnPreSong;
+    Button btnStart;
+    Button btnPause;
+    Button btnNextSong;
 
     public ControlCenter(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.buttons_control_center, this);
 
-        Button btnPreSong = findViewById(R.id.btn_preSong);
+        btnPreSong = findViewById(R.id.btn_preSong);
         btnPreSong.setOnClickListener(this);
-        Button btnStart = findViewById(R.id.btn_start);
+        btnStart = findViewById(R.id.btn_start);
         btnStart.setOnClickListener(this);
-        Button btnPause = findViewById(R.id.btn_pause);
+        btnPause = findViewById(R.id.btn_pause);
         btnPause.setOnClickListener(this);
-        Button btnNextSong = findViewById(R.id.btn_nextSong);
+        btnNextSong = findViewById(R.id.btn_nextSong);
         btnNextSong.setOnClickListener(this);
-
     }
 
-    public void setMusic(int resId){
-        myMediaPlayer = new MyMediaPlayer(resId);
+    public void setMusic(SongFile songFile){
+        myMediaPlayer = new MyMediaPlayer(songFile);
+    }
+
+    public MyMediaPlayer getMyMediaPlayer() {
+        return myMediaPlayer;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_preSong:
-                Toast.makeText(MyApplication.context, "上一首",Toast.LENGTH_SHORT).show();
+                myMediaPlayer.pre();
                 break;
             case R.id.btn_start:
                 if (myMediaPlayer!=null) {
@@ -50,7 +57,7 @@ public class ControlCenter extends LinearLayout implements View.OnClickListener 
                 }
                 break;
             case R.id.btn_nextSong:
-                Toast.makeText(MyApplication.context, "下一首",Toast.LENGTH_SHORT).show();
+                myMediaPlayer.next();
                 break;
             default:
                 break;

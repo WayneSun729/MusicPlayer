@@ -6,10 +6,14 @@ package com.wayne.musicplayer;
 public class SongFile {
     String musicName;
     String singerName;
+    int id;
+    int rid;
 
-    public SongFile(String musicName, String singerName) {
+    public SongFile(String musicName, String singerName, int rid) {
         this.musicName = musicName;
         this.singerName = singerName;
+        this.rid = rid;
+        id = MainActivityViewModel.getSongList().size();
     }
 
     public String getSongName() {
@@ -26,5 +30,13 @@ public class SongFile {
 
     public void setSingerName(String singerName) {
         this.singerName = singerName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getRid() {
+        return rid;
     }
 }
