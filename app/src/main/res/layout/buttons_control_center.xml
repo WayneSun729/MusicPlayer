@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    >
+
+    <Button
+        android:id="@+id/btn_preSong"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        style="?android:attr/buttonStyle"
+        android:text="上一首"
+        />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        style="?android:attr/buttonStyle"
+        android:text="开始"
+        />
+
+    <Button
+        android:id="@+id/btn_pause"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        style="?android:attr/buttonStyle"
+        android:text="暂停"
+        />
+
+    <Button
+        android:id="@+id/btn_nextSong"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        style="?android:attr/buttonStyle"
+        android:text="下一首"
+        />
+
+</LinearLayout>
