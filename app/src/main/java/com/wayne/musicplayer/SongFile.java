@@ -4,10 +4,10 @@ package com.wayne.musicplayer;
  * @author Wayne
  */
 public class SongFile {
-    String musicName;
-    String singerName;
-    int id;
-    int rid;
+    private String musicName;
+    private String singerName;
+    private int id;
+    private int rid;
 
     public SongFile(String musicName, String singerName, int rid) {
         this.musicName = musicName;

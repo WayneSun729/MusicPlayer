@@ -1,5 +1,6 @@
 package com.wayne.musicplayer;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ public class MyMediaPlayer {
     public MyMediaPlayer(SongFile songFile) {
         nowSongFile = songFile;
         mediaPlayer = MediaPlayer.create(MyApplication.context, nowSongFile.getRid());
+        mediaPlayer.setOnCompletionListener(new CompletionListener());
     }
 
     public void start(){
@@ -46,6 +48,8 @@ public class MyMediaPlayer {
             mediaPlayer = MediaPlayer.create(MyApplication.context, nextSongFile.getRid());
             mediaPlayer.start();
             nowSongFile = nextSongFile;
+            //发生广播，显示歌曲信息
+            BroadCastSender.create("SongStart",nowSongFile.getId()).sendBroadCast();
         }catch (IndexOutOfBoundsException e){
             Toast.makeText(MyApplication.context, "没有下一首了哦",Toast.LENGTH_SHORT).show();
         }
@@ -60,9 +64,20 @@ public class MyMediaPlayer {
             Log.d("Wayne", "上一首的id为" + (nowSongFile.getId() - 1));
             mediaPlayer.start();
             nowSongFile = preSongFile;
+            //发生广播，显示歌曲信息
+            BroadCastSender.create("SongStart",nowSongFile.getId()).sendBroadCast();
         }
         catch (IndexOutOfBoundsException e){
             Toast.makeText(MyApplication.context, "没有上一首了哦",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private class CompletionListener implements MediaPlayer.OnCompletionListener {
+        //在播放完成时调用，用以实现自动播放下一首的功能
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            next();
+        }
+
     }
 }

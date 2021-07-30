@@ -12,6 +12,22 @@
         />
 
 
+    <TextView
+        android:id="@+id/tv_nowSong"
+        android:layout_above="@+id/controlCenter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:text="当前没有歌曲在播放"
+        android:gravity="center"
+        />
+
+
     <com.wayne.musicplayer.ControlCenter
         android:id="@+id/controlCenter"
         android:layout_alignParentBottom="true"

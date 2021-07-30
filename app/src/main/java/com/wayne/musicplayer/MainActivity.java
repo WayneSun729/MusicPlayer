@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,30 +23,43 @@ public class MainActivity extends AppCompatActivity {
     MainActivityViewModel mainActivityViewModel;
 
     ControlMusicStartReceiver controlMusicStartReceiver;
+    ShowMusicStartReceiver showMusicStartReceiver;
+    TextView tv_nowSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tv_nowSong = findViewById(R.id.tv_nowSong);
+        tv_nowSong.setSelected(true);
         controlCenter = findViewById(R.id.controlCenter);
+
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
+        //初始化recyclerview并展示
         initSongs();
-
         RecyclerView rclvSongs = findViewById(R.id.rclv_songs);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rclvSongs.setLayoutManager(layoutManager);
         SongFileAdapter songFileAdapter = new SongFileAdapter();
         rclvSongs.setAdapter(songFileAdapter);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("SongSelected");
+        //注册监听点击引起音乐播放的广播
+        IntentFilter intentFilterSelect = new IntentFilter();
+        intentFilterSelect.addAction("SongSelected");
         controlMusicStartReceiver = new ControlMusicStartReceiver();
-        registerReceiver(controlMusicStartReceiver, intentFilter);
+        registerReceiver(controlMusicStartReceiver, intentFilterSelect);
+        //注册播放音乐后显示歌曲信息的广播
+        IntentFilter intentFilterStart = new IntentFilter();
+        intentFilterStart.addAction("SongStart");
+        showMusicStartReceiver = new ShowMusicStartReceiver();
+        registerReceiver(showMusicStartReceiver, intentFilterStart);
     }
 
     private void initSongs() {
         MainActivityViewModel.addMusicFile(new SongFile("五四特别版——错位时空","排骨",R.raw.example));
         MainActivityViewModel.addMusicFile(new SongFile("老古董","许嵩",R.raw.example2));
+        MainActivityViewModel.addMusicFile(new SongFile("国际歌","唐朝",R.raw.example3));
     }
 
     @Override
@@ -68,6 +82,25 @@ public class MainActivity extends AppCompatActivity {
             }
 //            Log.d("Wayne", String.valueOf(intent.getIntExtra("id", 1)));
             controlCenter.btnStart.performClick();
+        }
+    }
+    
+    class ShowMusicStartReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int id = intent.getIntExtra("id", -1);
+            SongFile nowSong = MainActivityViewModel.getSongList().get(id);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 200; i++) {
+                if (i == 50 || i == 150) {
+                    sb.append(nowSong.getSongName()).append("--").append(nowSong.getSingerName());
+                }else {
+                    sb.append(" ");
+                }
+            }
+            String strNowSong = sb.toString();
+            tv_nowSong.setText(strNowSong);
         }
     }
 

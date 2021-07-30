@@ -1,5 +1,6 @@
 package com.wayne.musicplayer;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,12 +36,8 @@ public class SongFileAdapter extends RecyclerView.Adapter<SongFileAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent("SongSelected");
-            intent.setPackage(MyApplication.context.getPackageName());
-            intent.putExtra("id",id);
-            MyApplication.context.sendBroadcast(intent);
-            Log.d("Wayne", "发出广播"+ id);
-//        MainActivity.getControlCenter.setMusic(R.raw.example);
+            BroadCastSender.create("SongSelected", id).sendBroadCast();
+            BroadCastSender.create("SongStart", id).sendBroadCast();
     }
 }
     @NonNull
