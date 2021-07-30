@@ -12,12 +12,11 @@ import android.widget.Toast;
  * @author Wayne
  */
 public class ControlCenter extends LinearLayout implements View.OnClickListener {
-
+    MyMediaPlayer myMediaPlayer;
 
     public ControlCenter(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.buttons_control_center, this);
-
 
         Button btnPreSong = findViewById(R.id.btn_preSong);
         btnPreSong.setOnClickListener(this);
@@ -30,6 +29,10 @@ public class ControlCenter extends LinearLayout implements View.OnClickListener 
 
     }
 
+    public void setMusic(int resId){
+        myMediaPlayer = new MyMediaPlayer(resId);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -37,10 +40,14 @@ public class ControlCenter extends LinearLayout implements View.OnClickListener 
                 Toast.makeText(MyApplication.context, "上一首",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_start:
-                Toast.makeText(MyApplication.context, "开始",Toast.LENGTH_SHORT).show();
+                if (myMediaPlayer!=null) {
+                    myMediaPlayer.start();
+                }
                 break;
             case R.id.btn_pause:
-                Toast.makeText(MyApplication.context, "暂停",Toast.LENGTH_SHORT).show();
+                if (myMediaPlayer!=null) {
+                    myMediaPlayer.pause();
+                }
                 break;
             case R.id.btn_nextSong:
                 Toast.makeText(MyApplication.context, "下一首",Toast.LENGTH_SHORT).show();
