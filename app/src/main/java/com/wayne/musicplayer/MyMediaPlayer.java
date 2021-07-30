@@ -3,6 +3,9 @@ package com.wayne.musicplayer;
 import android.media.MediaPlayer;
 import android.widget.Toast;
 
+/**
+ * @author Wayne
+ */
 public class MyMediaPlayer {
     MediaPlayer mediaPlayer;
 
