@@ -1,18 +1,19 @@
-package com.wayne.musicplayer;
+package com.wayne.musicplayer.util;
 
 import android.content.Intent;
-import android.util.Log;
+
+import com.wayne.musicplayer.MyApplication;
 
 /**
  * @author Wayne
  */
-public class BroadCastSender {
+public class BroadcastSenderUtils {
 
-    private static BroadCastSender broadCastSender;;
+    private static BroadcastSenderUtils BroadcastSenderUtils;
     private int id;
     String action;
 
-    private BroadCastSender(String action, int id) {
+    private BroadcastSenderUtils(String action, int id) {
         this.id = id;
         this.action = action;
     }
@@ -25,15 +26,15 @@ public class BroadCastSender {
         this.action = action;
     }
 
-    public static BroadCastSender create(String action, int id) {
-        if (broadCastSender == null){
-            broadCastSender = new BroadCastSender(action, id);
+    public static BroadcastSenderUtils create(String action, int id) {
+        if (BroadcastSenderUtils == null){
+            BroadcastSenderUtils = new BroadcastSenderUtils(action, id);
         }else {
-            broadCastSender.setAction(action);
-            broadCastSender.setId(id);
+            BroadcastSenderUtils.setAction(action);
+            BroadcastSenderUtils.setId(id);
         }
 
-        return broadCastSender;
+        return BroadcastSenderUtils;
     }
 
     public void sendBroadCast() {

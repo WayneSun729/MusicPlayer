@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.wayne.musicplayer.widget.ControlCenter;
 
 /**
  * @author Wayne
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 controlCenter.setMusic(MainActivityViewModel.getSongList().get(id));
             }
 //            Log.d("Wayne", String.valueOf(intent.getIntExtra("id", 1)));
-            controlCenter.btnStart.performClick();
+            controlCenter.getBtnStart().performClick();
         }
     }
     

@@ -28,7 +28,7 @@
         />
 
 
-    <com.wayne.musicplayer.ControlCenter
+    <com.wayne.musicplayer.widget.ControlCenter
         android:id="@+id/controlCenter"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"

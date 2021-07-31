@@ -1,9 +1,10 @@
 package com.wayne.musicplayer;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.wayne.musicplayer.util.BroadcastSenderUtils;
 
 /**
  * @author Wayne
@@ -49,7 +50,7 @@ public class MyMediaPlayer {
             mediaPlayer.start();
             nowSongFile = nextSongFile;
             //发生广播，显示歌曲信息
-            BroadCastSender.create("SongStart",nowSongFile.getId()).sendBroadCast();
+            BroadcastSenderUtils.create("SongStart",nowSongFile.getId()).sendBroadCast();
         }catch (IndexOutOfBoundsException e){
             Toast.makeText(MyApplication.context, "没有下一首了哦",Toast.LENGTH_SHORT).show();
         }
@@ -65,7 +66,7 @@ public class MyMediaPlayer {
             mediaPlayer.start();
             nowSongFile = preSongFile;
             //发生广播，显示歌曲信息
-            BroadCastSender.create("SongStart",nowSongFile.getId()).sendBroadCast();
+            BroadcastSenderUtils.create("SongStart",nowSongFile.getId()).sendBroadCast();
         }
         catch (IndexOutOfBoundsException e){
             Toast.makeText(MyApplication.context, "没有上一首了哦",Toast.LENGTH_SHORT).show();

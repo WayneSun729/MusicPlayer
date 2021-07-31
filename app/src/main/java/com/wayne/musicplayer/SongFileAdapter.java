@@ -1,8 +1,5 @@
 package com.wayne.musicplayer;
 
-import android.content.BroadcastReceiver;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import com.wayne.musicplayer.util.BroadcastSenderUtils;
 
 /**
  * @author Wayne
@@ -36,8 +33,8 @@ public class SongFileAdapter extends RecyclerView.Adapter<SongFileAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            BroadCastSender.create("SongSelected", id).sendBroadCast();
-            BroadCastSender.create("SongStart", id).sendBroadCast();
+            BroadcastSenderUtils.create("SongSelected", id).sendBroadCast();
+            BroadcastSenderUtils.create("SongStart", id).sendBroadCast();
     }
 }
     @NonNull

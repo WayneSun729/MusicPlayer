@@ -1,4 +1,4 @@
-package com.wayne.musicplayer;
+package com.wayne.musicplayer.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,17 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
+import com.wayne.musicplayer.MyMediaPlayer;
+import com.wayne.musicplayer.R;
+import com.wayne.musicplayer.SongFile;
 
 /**
  * @author Wayne
  */
 public class ControlCenter extends LinearLayout implements View.OnClickListener {
-    MyMediaPlayer myMediaPlayer;
-    Button btnPreSong;
-    Button btnStart;
-    Button btnPause;
-    Button btnNextSong;
+    private MyMediaPlayer myMediaPlayer;
+    private Button btnPreSong;
+    private Button btnStart;
+    private Button btnPause;
+    private Button btnNextSong;
 
     public ControlCenter(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -62,5 +65,9 @@ public class ControlCenter extends LinearLayout implements View.OnClickListener 
             default:
                 break;
         }
+    }
+
+    public Button getBtnStart() {
+        return btnStart;
     }
 }
