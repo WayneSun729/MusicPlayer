@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.wayne.musicplayer.MyApplication;
 import com.wayne.musicplayer.MyMediaPlayer;
 import com.wayne.musicplayer.R;
 import com.wayne.musicplayer.SongFile;
@@ -47,7 +49,12 @@ public class ControlCenter extends LinearLayout implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_preSong:
-                myMediaPlayer.pre();
+                try {
+                    myMediaPlayer.pre();
+                }
+                catch (Exception e){
+                    Toast.makeText(MyApplication.getContext(), "没有上一首了哦",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.btn_start:
                 if (myMediaPlayer!=null) {
@@ -60,7 +67,11 @@ public class ControlCenter extends LinearLayout implements View.OnClickListener 
                 }
                 break;
             case R.id.btn_nextSong:
-                myMediaPlayer.next();
+                try {
+                    myMediaPlayer.next();
+                }catch (Exception e){
+                    Toast.makeText(MyApplication.getContext(), "没有下一首了哦",Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
                 break;

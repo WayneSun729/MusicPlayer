@@ -5,46 +5,52 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wayne.musicplayer.widget.ControlCenter;
+import com.wayne.musicplayer.widget.HistoryFragment;
+import com.wayne.musicplayer.widget.SongSheetFragment;
 
 /**
  * @author Wayne
  */
 public class MainActivity extends AppCompatActivity {
 
-    public static ControlCenter controlCenter;
+    private ControlCenter controlCenter;
 
     MainActivityViewModel mainActivityViewModel;
 
     ControlMusicStartReceiver controlMusicStartReceiver;
     ShowMusicStartReceiver showMusicStartReceiver;
-    TextView tv_nowSong;
+    TextView tvNowSong;
+    Fragment fragNow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv_nowSong = findViewById(R.id.tv_nowSong);
-        tv_nowSong.setSelected(true);
+        tvNowSong = findViewById(R.id.tv_nowSong);
+        tvNowSong.setSelected(true);
         controlCenter = findViewById(R.id.controlCenter);
-
-        mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-
-        //初始化recyclerview并展示
-        initSongs();
-        RecyclerView rclvSongs = findViewById(R.id.rclv_songs);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rclvSongs.setLayoutManager(layoutManager);
-        SongFileAdapter songFileAdapter = new SongFileAdapter();
-        rclvSongs.setAdapter(songFileAdapter);
+        Button btnSongList = findViewById(R.id.btn_songList);
+        Button btnHistory = findViewById(R.id.btn_history);
+        SongSheetFragment fragSongSheet = new SongSheetFragment();
+        HistoryFragment fragHistory = new HistoryFragment();
+        btnSongList.setOnClickListener(v -> replaceFragment(fragSongSheet));
+        btnHistory.setOnClickListener(v -> replaceFragment(fragHistory));
+        replaceFragment(fragSongSheet);
         //注册监听点击引起音乐播放的广播
         IntentFilter intentFilterSelect = new IntentFilter();
         intentFilterSelect.addAction("SongSelected");
@@ -57,17 +63,21 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(showMusicStartReceiver, intentFilterStart);
     }
 
-    private void initSongs() {
-        MainActivityViewModel.addMusicFile(new SongFile("五四特别版——错位时空","排骨",R.raw.example));
-        MainActivityViewModel.addMusicFile(new SongFile("老古董","许嵩",R.raw.example2));
-        MainActivityViewModel.addMusicFile(new SongFile("国际歌","唐朝",R.raw.example3));
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(controlMusicStartReceiver);
 //        controlCenter.myMediaPlayer.stop();
+    }
+
+    private void replaceFragment(Fragment fragment){
+        if (fragNow == null || fragNow != fragment){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.frag_rcly, fragment);
+            transaction.commit();
+            fragNow = fragment;
+        }
     }
 
     class ControlMusicStartReceiver extends BroadcastReceiver {
@@ -101,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             String strNowSong = sb.toString();
-            tv_nowSong.setText(strNowSong);
+            tvNowSong.setText(strNowSong);
         }
     }
 

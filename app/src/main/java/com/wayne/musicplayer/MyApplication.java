@@ -8,11 +8,15 @@ import android.content.Context;
  */
 public class MyApplication extends Application {
     @SuppressWarnings("StaticFieldLeak")
-    public static Context context;
+    private static Context context;
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

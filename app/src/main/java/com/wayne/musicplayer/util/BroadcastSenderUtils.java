@@ -39,9 +39,9 @@ public class BroadcastSenderUtils {
 
     public void sendBroadCast() {
         Intent intent = new Intent(action);
-        intent.setPackage(MyApplication.context.getPackageName());
+        intent.setPackage(MyApplication.getContext().getPackageName());
         intent.putExtra("id",id);
-        MyApplication.context.sendBroadcast(intent);
+        MyApplication.getContext().sendBroadcast(intent);
     }
 
 }

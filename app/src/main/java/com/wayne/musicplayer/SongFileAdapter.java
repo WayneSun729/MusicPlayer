@@ -15,6 +15,8 @@ import com.wayne.musicplayer.util.BroadcastSenderUtils;
  */
 public class SongFileAdapter extends RecyclerView.Adapter<SongFileAdapter.ViewHolder> {
 
+    int flag = 0;
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView tvNumber;
@@ -48,7 +50,12 @@ public class SongFileAdapter extends RecyclerView.Adapter<SongFileAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull  SongFileAdapter.ViewHolder holder, int position) {
-        SongFile musicFile = MainActivityViewModel.getSongList().get(position);
+        SongFile musicFile;
+        if (flag==MainActivityViewModel.FLAG_SONGSHEET){
+            musicFile = MainActivityViewModel.getSongList().get(position);
+        }else {
+            musicFile = MainActivityViewModel.getHistoryArrayList().get(position);
+        }
         holder.tvNumber.setText(String.valueOf(position+1));
         holder.tvSongName.setText(musicFile.getSongName());
         holder.tvSingerName.setText(musicFile.getSingerName());
@@ -57,7 +64,16 @@ public class SongFileAdapter extends RecyclerView.Adapter<SongFileAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return MainActivityViewModel.getSongList().size();
+        int count;
+        if (flag==MainActivityViewModel.FLAG_SONGSHEET){
+            count = MainActivityViewModel.getSongList().size();
+        }else {
+            count = MainActivityViewModel.getHistoryArrayList().size();
+        }
+        return count;
     }
 
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
 }

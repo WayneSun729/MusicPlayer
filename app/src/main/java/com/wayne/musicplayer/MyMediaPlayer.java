@@ -15,7 +15,7 @@ public class MyMediaPlayer {
 
     public MyMediaPlayer(SongFile songFile) {
         nowSongFile = songFile;
-        mediaPlayer = MediaPlayer.create(MyApplication.context, nowSongFile.getRid());
+        mediaPlayer = MediaPlayer.create(MyApplication.getContext(), nowSongFile.getRid());
         mediaPlayer.setOnCompletionListener(new CompletionListener());
     }
 
@@ -23,7 +23,7 @@ public class MyMediaPlayer {
         if (!mediaPlayer.isPlaying()){
             mediaPlayer.start();
         }else {
-            Toast.makeText(MyApplication.context, "当前已经在播放了哦",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApplication.getContext(), "当前已经在播放了哦",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -31,7 +31,7 @@ public class MyMediaPlayer {
         if (mediaPlayer.isPlaying()){
             mediaPlayer.pause();
         }else {
-            Toast.makeText(MyApplication.context, "当前没有在播放，无法暂停哦",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApplication.getContext(), "当前没有在播放，无法暂停哦",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -41,36 +41,27 @@ public class MyMediaPlayer {
     }
 
     public void next(){
-        try {
-            SongFile nextSongFile = MainActivityViewModel.getSongList().get(nowSongFile.getId()+1);
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            Log.d("Wayne", "下一首的id为"+ nextSongFile.getId());
-            mediaPlayer = MediaPlayer.create(MyApplication.context, nextSongFile.getRid());
-            mediaPlayer.start();
-            nowSongFile = nextSongFile;
-            //发生广播，显示歌曲信息
-            BroadcastSenderUtils.create("SongStart",nowSongFile.getId()).sendBroadCast();
-        }catch (IndexOutOfBoundsException e){
-            Toast.makeText(MyApplication.context, "没有下一首了哦",Toast.LENGTH_SHORT).show();
-        }
+        SongFile nextSongFile = MainActivityViewModel.getSongList().get(nowSongFile.getId()+1);
+        mediaPlayer.stop();
+        mediaPlayer.release();
+        Log.d("Wayne", "下一首的id为"+ nextSongFile.getId());
+        mediaPlayer = MediaPlayer.create(MyApplication.getContext(), nextSongFile.getRid());
+        mediaPlayer.start();
+        nowSongFile = nextSongFile;
+        //发生广播，显示歌曲信息
+        BroadcastSenderUtils.create("SongStart",nowSongFile.getId()).sendBroadCast();
     }
 
     public void pre(){
-        try {
-            SongFile preSongFile = MainActivityViewModel.getSongList().get(nowSongFile.getId() - 1);
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = MediaPlayer.create(MyApplication.context, preSongFile.getRid());
-            Log.d("Wayne", "上一首的id为" + (nowSongFile.getId() - 1));
-            mediaPlayer.start();
-            nowSongFile = preSongFile;
-            //发生广播，显示歌曲信息
-            BroadcastSenderUtils.create("SongStart",nowSongFile.getId()).sendBroadCast();
-        }
-        catch (IndexOutOfBoundsException e){
-            Toast.makeText(MyApplication.context, "没有上一首了哦",Toast.LENGTH_SHORT).show();
-        }
+        SongFile preSongFile = MainActivityViewModel.getSongList().get(nowSongFile.getId() - 1);
+        mediaPlayer.stop();
+        mediaPlayer.release();
+        mediaPlayer = MediaPlayer.create(MyApplication.getContext(), preSongFile.getRid());
+        Log.d("Wayne", "上一首的id为" + (nowSongFile.getId() - 1));
+        mediaPlayer.start();
+        nowSongFile = preSongFile;
+        //发生广播，显示歌曲信息
+        BroadcastSenderUtils.create("SongStart",nowSongFile.getId()).sendBroadCast();
     }
 
     private class CompletionListener implements MediaPlayer.OnCompletionListener {

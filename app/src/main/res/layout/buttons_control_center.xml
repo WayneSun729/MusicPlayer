@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        style="?android:attr/buttonStyle"
+        style="@style/Button_In_ControlCenter"
         android:text="上一首"
         />
 
@@ -20,7 +20,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        style="?android:attr/buttonStyle"
+        style="@style/Button_In_ControlCenter"
         android:text="开始"
         />
 
@@ -29,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        style="?android:attr/buttonStyle"
+        style="@style/Button_In_ControlCenter"
         android:text="暂停"
         />
 
@@ -38,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        style="?android:attr/buttonStyle"
+        style="@style/Button_In_ControlCenter"
         android:text="下一首"
         />
 
