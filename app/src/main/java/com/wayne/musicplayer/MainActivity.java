@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     TextView tvNowSong;
     Fragment fragNow;
 
+    private final String BTN_UNSELECTED = "#8A2BE2";
+    private final String SELECTED = "#836FFF";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +52,16 @@ public class MainActivity extends AppCompatActivity {
         Button btnHistory = findViewById(R.id.btn_history);
         SongSheetFragment fragSongSheet = new SongSheetFragment();
         HistoryFragment fragHistory = new HistoryFragment();
-        btnSongList.setOnClickListener(v -> replaceFragment(fragSongSheet));
-        btnHistory.setOnClickListener(v -> replaceFragment(fragHistory));
+        btnSongList.setOnClickListener(v -> {
+            btnHistory.setBackgroundColor(Color.parseColor(BTN_UNSELECTED));
+            btnSongList.setBackgroundColor(Color.parseColor(SELECTED));
+            replaceFragment(fragSongSheet);
+        });
+        btnHistory.setOnClickListener(v -> {
+            btnHistory.setBackgroundColor(Color.parseColor(SELECTED));
+            btnSongList.setBackgroundColor(Color.parseColor(BTN_UNSELECTED));
+            replaceFragment(fragHistory);
+        });
         replaceFragment(fragSongSheet);
         //注册监听点击引起音乐播放的广播
         IntentFilter intentFilterSelect = new IntentFilter();
